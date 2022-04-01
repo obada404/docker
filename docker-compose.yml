@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  front:
+    build:
+      context: ./docker-template
+    volumes:
+      - .:/src
+    command: npm run start
+    ports:
+      - "8090:8090"
+  order :
+    build:
+      context: ./backs2
+    volumes:
+      - .:/src
+    command: npm run start
+    ports:
+      - "8080:8080"
+  catalog:
+    build:
+      context: ./back
+    volumes:
+      - .:/src
+    command: npm run start
+    ports:
+      - "8000:8000"
