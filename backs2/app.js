@@ -16,18 +16,19 @@ app.get("/purchase", async (req, res) => {
   let q = url.parse(req.url, true);
   let qdata = q.query;
   try {
-    const req1= await axios.get('http://192.168.1.104:8000/info?Id='+qdata.Id);
+    const req1= await axios.get('http://172.19.136.254:8000/info?id='+qdata.id);
     console.log(req1.data ,"req1");
     let req2 ;
     if(req1.data.stock >0){
-      req2 =await axios.get('http://192.168.1.104:8000'+req.url);
-      console.log(req2.data ,"req2");
-  
+      req2 =await axios.get('http://172.19.136.254:8000'+req.url);
+      return res.json("done");
     }
-    else {
+    else if(req1.data.stock ==0){
       return res.json(" no stock ")
     }
-    return res.json("done");
+    else{
+      return res.json(" no item with such id ")
+    }
   }catch(err){
     console.log(err)
   }
