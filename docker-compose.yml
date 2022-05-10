@@ -7,7 +7,7 @@ services:
       - .:/src
     command: npm run start
     ports:
-      - "8090:8090"
+      - "8090:8000"
   order :
     build:
       context: ./backs2
@@ -15,7 +15,19 @@ services:
       - .:/src
     command: npm run start
     ports:
-      - "8080:8080"
+      - "8080:8000"
+    environment:
+      - ORDER=catalog:8000
+  order2 :
+    build:
+      context: ./backs2
+    volumes:
+      - .:/src
+    command: npm run start
+    ports:
+      - "8070:8000"
+    environment:
+      - ORDER=catalog2:8000
   catalog:
     build:
       context: ./back
@@ -24,3 +36,11 @@ services:
     command: npm run start
     ports:
       - "8000:8000"
+  catalog2:
+    build:
+      context: ./back
+    volumes:
+      - .:/src
+    command: npm run start
+    ports:
+      - "8010:8000"

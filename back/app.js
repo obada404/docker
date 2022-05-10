@@ -1,5 +1,7 @@
 const express = require("express");
 const book=require('./book');
+const book2=require('./bookcopy');
+
 let mongoose = require('mongoose');
 const http = require('http');
 const url = require('url');
@@ -15,17 +17,24 @@ mongoose.connect('mongodb+srv://Adamsiksik:ebaa2009@cluster0.an1q8.mongodb.net/P
     let qdata = q.query;
     const id = qdata.id;
     const filter = { Id:  id  };
-  
+      let stock2 ;
+    let all2;
+
     let stock ;
     let all;
     stock = await book.findOne(filter).select("stock");
+        stock2 = await book2.findOne(filter).select("stock2");
+
     if(stock==null){
       res.json("no item with such id sorry");
     }
     else{
     console.log("stock :   "+ stock);
-  
+    console.log("stock2 :   "+ stock2);
+
       console.log("dsadasdsadsad");
+      all2 = await book2.findOneAndUpdate(filter ,{$inc: {stock2: -1}});
+
       all = await book.findOneAndUpdate(filter ,{$inc: {stock: -1}});
       res.json(all);
    
